@@ -18,7 +18,6 @@ const blog = defineCollection({
 				updated: z.coerce.date().optional(),
 				cover: image().optional(),
 				coverAlt: z.string().optional(),
-				tags: z.array(z.string()).default([]),
 				draft: z.boolean().default(false),
 			})
 			.refine((d) => !d.cover || !!d.coverAlt, {

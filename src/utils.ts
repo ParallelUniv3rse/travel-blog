@@ -10,19 +10,6 @@ export function postUrl(post: CollectionEntry<'blog'>): string {
 	return withBase(`/blog/${post.id}/`);
 }
 
-export function tagUrl(tag: string): string {
-	return withBase(`/tags/${slugifyTag(tag)}/`);
-}
-
-export function slugifyTag(tag: string): string {
-	return tag
-		.toLowerCase()
-		.normalize('NFKD')
-		.replace(/[̀-ͯ]/g, '')
-		.replace(/[^a-z0-9]+/g, '-')
-		.replace(/^-|-$/g, '');
-}
-
 /** Published posts, newest first. Drafts are shown only in `astro dev`. */
 export async function getPosts(): Promise<CollectionEntry<'blog'>[]> {
 	const posts = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);

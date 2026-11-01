@@ -2,11 +2,10 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
-import TagList from '../components/TagList.astro';
 import Page from './Page.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
-const { title, description, date, updated, cover, coverAlt, tags } = Astro.props;
+const { title, description, date, updated, cover, coverAlt } = Astro.props;
 ---
 
 <Page title={title} description={description} image={cover}>
@@ -17,7 +16,6 @@ const { title, description, date, updated, cover, coverAlt, tags } = Astro.props
 				<FormattedDate date={date} />
 				{updated && <span> · upraveno <FormattedDate date={updated} /></span>}
 			</p>
-			<TagList tags={tags} />
 		</header>
 		{cover && <Image class="cover" src={cover} alt={coverAlt ?? ''} width={1440} priority />}
 		<div class="prose">
