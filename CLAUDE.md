@@ -10,8 +10,8 @@ Claude. Keep it minimal: only what is needed for that.
 - GitHub Pages, deployed by `.github/workflows/deploy.yml` on every push to `main`.
 - Language: Czech. Write posts, titles, descriptions, alt text and UI
   text in Czech (`<html lang="cs">`, dates formatted `cs-CZ`).
-- Site: https://paralleluniv3rse.github.io/travel-blog/ (`site` + `base` in `astro.config.mjs`).
-  For a custom domain: set `site` to the domain, `base` to `'/'`, add `public/CNAME`.
+- Site: https://blog.arnostneurad.com/ (custom domain: `site` + `base` in
+  `astro.config.mjs`, `public/CNAME`; DNS CNAME `blog` → `paralleluniv3rse.github.io`).
 - Internal links must go through `withBase()` / `postUrl()` in `src/utils.ts`.
 
 ## Content
