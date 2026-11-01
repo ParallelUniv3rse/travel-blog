@@ -23,7 +23,6 @@ const { posts } = Astro.props;
 				</a>
 				<p class="meta">
 					<FormattedDate date={post.data.date} />
-					{post.data.draft && <strong> · koncept</strong>}
 				</p>
 				<p class="description">{post.data.description}</p>
 			</li>

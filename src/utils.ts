@@ -10,8 +10,8 @@ export function postUrl(post: CollectionEntry<'blog'>): string {
 	return withBase(`/blog/${post.id}/`);
 }
 
-/** Published posts, newest first. Drafts are shown only in `astro dev`. */
+/** All posts, newest first. */
 export async function getPosts(): Promise<CollectionEntry<'blog'>[]> {
-	const posts = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);
+	const posts = await getCollection('blog');
 	return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }

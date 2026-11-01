@@ -15,10 +15,8 @@ const blog = defineCollection({
 				title: z.string(),
 				date: z.coerce.date(),
 				description: z.string(),
-				updated: z.coerce.date().optional(),
 				cover: image().optional(),
 				coverAlt: z.string().optional(),
-				draft: z.boolean().default(false),
 			})
 			.refine((d) => !d.cover || !!d.coverAlt, {
 				message: 'coverAlt is required when cover is set',

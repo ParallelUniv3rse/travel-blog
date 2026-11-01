@@ -5,7 +5,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Page from './Page.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
-const { title, description, date, updated, cover, coverAlt } = Astro.props;
+const { title, description, date, cover, coverAlt } = Astro.props;
 ---
 
 <Page title={title} description={description} image={cover}>
@@ -14,7 +14,6 @@ const { title, description, date, updated, cover, coverAlt } = Astro.props;
 			<h1>{title}</h1>
 			<p class="meta">
 				<FormattedDate date={date} />
-				{updated && <span> · upraveno <FormattedDate date={updated} /></span>}
 			</p>
 		</header>
 		{cover && <Image class="cover" src={cover} alt={coverAlt ?? ''} width={1440} priority />}

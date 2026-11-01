@@ -1,7 +1,9 @@
 # Personal blog: working guide for Claude
 
-Low-maintenance personal blog. The owner never edits files by hand; all
-writing, editing and publishing happens by asking Claude.
+Low-maintenance blog with updates from a 14-day vacation (the owner and their
+girlfriend), shared by link with family and close friends. The owner never
+edits files by hand; all writing, editing and publishing happens by asking
+Claude. Keep it minimal: only what is needed for that.
 
 ## Stack
 - Astro (official blog starter), static output.
@@ -22,11 +24,10 @@ writing, editing and publishing happens by asking Claude.
   description: 'One-sentence summary (used in post list and meta tags).'
   cover: '../../assets/posts/<slug>/cover.jpg'   # optional
   coverAlt: 'Describe the cover'                  # required if cover is set
-  draft: true                                     # optional; hidden from production build
-  updated: 2026-11-05                             # optional
   ```
 - Images: `src/assets/posts/<slug>/`.
-- Pages: homepage = post list, `/about/`. No RSS feed, no tags.
+- Pages: homepage = post list, plus one page per post. No navigation menu,
+  About page, RSS, tags, drafts or sitemap.
 - Site title/description/author: `src/consts.ts`.
 
 ## Workflows
