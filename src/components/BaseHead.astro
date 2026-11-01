@@ -26,6 +26,7 @@ const ogImage = image ? await getImage({ src: image, width: 1200, format: 'jpg' 
 <link rel="sitemap" href={withBase('/sitemap-index.xml')} />
 <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={new URL(withBase('/rss.xml'), Astro.site)} />
 <meta name="generator" content={Astro.generator} />
+<meta name="robots" content="noarchive" />
 
 <Font cssVariable="--font-atkinson" preload />
 

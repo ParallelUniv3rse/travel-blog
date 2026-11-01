@@ -1,0 +1,10 @@
+# Opt out of web archiving (Internet Archive / Wayback Machine).
+# Only takes effect when served at the domain root, i.e. with a custom domain.
+User-agent: ia_archiver
+Disallow: /
+
+User-agent: archive.org_bot
+Disallow: /
+
+User-agent: *
+Allow: /
