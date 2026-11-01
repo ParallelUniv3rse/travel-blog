@@ -1,0 +1,24 @@
+---
+import { SITE_TITLE } from '../../consts';
+import Page from '../../layouts/Page.astro';
+import { getPosts, tagUrl } from '../../utils';
+
+const posts = await getPosts();
+const counts = new Map<string, number>();
+for (const post of posts) for (const tag of post.data.tags) counts.set(tag, (counts.get(tag) ?? 0) + 1);
+const tags = [...counts].sort((a, b) => a[0].localeCompare(b[0]));
+---
+
+<Page title={`Tags · ${SITE_TITLE}`} description="All tags">
+	<h1>Tags</h1>
+	{tags.length === 0 && <p>No tags yet.</p>}
+	<ul>
+		{
+			tags.map(([tag, n]) => (
+				<li>
+					<a href={tagUrl(tag)}>#{tag}</a> ({n})
+				</li>
+			))
+		}
+	</ul>
+</Page>

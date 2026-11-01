@@ -1,0 +1,23 @@
+---
+import PostList from '../../components/PostList.astro';
+import { SITE_TITLE } from '../../consts';
+import Page from '../../layouts/Page.astro';
+import { getPosts, slugifyTag } from '../../utils';
+
+export async function getStaticPaths() {
+	const posts = await getPosts();
+	const tags = new Map<string, string>();
+	for (const post of posts) for (const tag of post.data.tags) tags.set(slugifyTag(tag), tag);
+	return [...tags].map(([slug, tag]) => ({
+		params: { tag: slug },
+		props: { tag, posts: posts.filter((p) => p.data.tags.some((t) => slugifyTag(t) === slug)) },
+	}));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<Page title={`#${tag} · ${SITE_TITLE}`} description={`Posts tagged ${tag}`}>
+	<h1>#{tag}</h1>
+	<PostList posts={posts} />
+</Page>

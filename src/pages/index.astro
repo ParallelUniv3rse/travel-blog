@@ -1,0 +1,12 @@
+---
+import PostList from '../components/PostList.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Page from '../layouts/Page.astro';
+import { getPosts } from '../utils';
+
+const posts = await getPosts();
+---
+
+<Page title={SITE_TITLE} description={SITE_DESCRIPTION}>
+	<PostList posts={posts} />
+</Page>

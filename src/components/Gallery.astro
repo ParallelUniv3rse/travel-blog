@@ -1,0 +1,49 @@
+---
+// Photo grid for use in .mdx posts:
+//   import Gallery from '../../components/Gallery.astro';
+//   import a from '../../assets/posts/<slug>/a.jpg';
+//   <Gallery images={[{ src: a, alt: '...', caption: '...' }]} />
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+interface Props {
+	images: { src: ImageMetadata; alt: string; caption?: string }[];
+}
+const { images } = Astro.props;
+---
+
+<div class="gallery">
+	{
+		images.map(({ src, alt, caption }) => (
+			<figure>
+				<a href={src.src}>
+					<Image src={src} alt={alt} width={720} sizes="(min-width: 720px) 360px, 50vw" />
+				</a>
+				{caption && <figcaption>{caption}</figcaption>}
+			</figure>
+		))
+	}
+</div>
+<style>
+	.gallery {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+		gap: 0.75em;
+		margin: 1.5em 0;
+	}
+	figure {
+		margin: 0;
+	}
+	.gallery img {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		border-radius: 6px;
+	}
+	figcaption {
+		font-size: 0.8em;
+		color: rgb(var(--gray));
+		line-height: 1.4;
+	}
+</style>

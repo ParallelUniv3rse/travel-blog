@@ -1,0 +1,60 @@
+# Personal blog: working guide for Claude
+
+Low-maintenance personal blog. The owner never edits files by hand; all
+writing, editing and publishing happens by asking Claude.
+
+## Stack
+- Astro (official blog starter), static output.
+- GitHub Pages, deployed by `.github/workflows/deploy.yml` on every push to `main`.
+- Site: https://paralleluniv3rse.github.io/travel-blog/ (`site` + `base` in `astro.config.mjs`).
+  For a custom domain: set `site` to the domain, `base` to `'/'`, add `public/CNAME`.
+- Internal links must go through `withBase()` / `postUrl()` / `tagUrl()` in `src/utils.ts`.
+
+## Content
+- Posts: `src/content/blog/YYYY-MM-DD-slug.md` (`.mdx` only when a gallery is needed).
+  URL is `/blog/<slug>/` (date prefix stripped).
+- Frontmatter (validated in `src/content.config.ts`):
+  ```yaml
+  title: 'Post title'
+  date: 2026-11-01
+  description: 'One-sentence summary (used in list, RSS, meta tags).'
+  cover: '../../assets/posts/<slug>/cover.jpg'   # optional
+  coverAlt: 'Describe the cover'                  # required if cover is set
+  tags: ['japan', 'food']                         # lowercase, reuse existing tags
+  draft: true                                     # optional; hidden from production build
+  updated: 2026-11-05                             # optional
+  ```
+- Images: `src/assets/posts/<slug>/`.
+- Pages: homepage = post list, `/about/`, `/tags/`, `/tags/<tag>/`, `/rss.xml`.
+- Site title/description/author: `src/consts.ts`.
+
+## Workflows
+- **New post:** write from the owner's topic/notes in their voice, pick tags
+  (check existing ones first), build, preview, commit, push.
+- **Edit:** locate the post (grep titles/content), change it, build, commit, push.
+- **Photos:**
+  1. Process every photo: `node scripts/process-photos.mjs <slug> <files...>`
+     (auto-rotate, max 2000 px long side, JPEG ~80%, <500 KB target,
+     strips ALL metadata incl. GPS; fails if metadata remains).
+     Never commit unprocessed originals.
+  2. Inline image in Markdown: `![alt text](../../assets/posts/<slug>/name.jpg)`
+  3. Gallery: use `.mdx` and the `Gallery` component:
+     ```mdx
+     import Gallery from '../../components/Gallery.astro';
+     import a from '../../assets/posts/<slug>/a.jpg';
+     <Gallery images={[{ src: a, alt: '...', caption: '...' }]} />
+     ```
+  4. Every image needs meaningful alt text.
+  Astro generates responsive WebP sizes at build time (`image.layout: 'constrained'`).
+
+## Rules
+- Run `npm run build` before every push; never push a broken build.
+- Keep design simple, readable, mobile-first.
+- Do not add dependencies or features unless asked.
+- **Ask before deleting any post.**
+- Keep the repo well under 1 GB. Check with `du -sh src/assets` when adding
+  photos; if it passes ~500 MB, propose moving images to external storage.
+
+## Commits
+- Short, concise subject line.
+- Body: bullet points, short factual statements.

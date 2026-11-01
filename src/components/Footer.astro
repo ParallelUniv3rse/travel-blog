@@ -1,0 +1,20 @@
+---
+import { AUTHOR } from '../consts';
+import { withBase } from '../utils';
+const today = new Date();
+---
+
+<footer>
+	&copy; {today.getFullYear()} {AUTHOR} · <a href={withBase('/rss.xml')}>RSS</a>
+</footer>
+<style>
+	footer {
+		padding: 2em 1em 4em 1em;
+		color: rgb(var(--gray));
+		text-align: center;
+		font-size: 0.9em;
+	}
+	footer a {
+		color: rgb(var(--gray));
+	}
+</style>
