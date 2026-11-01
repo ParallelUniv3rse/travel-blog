@@ -9,9 +9,9 @@ for (const post of posts) for (const tag of post.data.tags) counts.set(tag, (cou
 const tags = [...counts].sort((a, b) => a[0].localeCompare(b[0]));
 ---
 
-<Page title={`Tags · ${SITE_TITLE}`} description="All tags">
-	<h1>Tags</h1>
-	{tags.length === 0 && <p>No tags yet.</p>}
+<Page title={`Štítky · ${SITE_TITLE}`} description="Všechny štítky">
+	<h1>Štítky</h1>
+	{tags.length === 0 && <p>Zatím žádné štítky.</p>}
 	<ul>
 		{
 			tags.map(([tag, n]) => (

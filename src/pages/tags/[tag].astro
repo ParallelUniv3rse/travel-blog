@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 const { tag, posts } = Astro.props;
 ---
 
-<Page title={`#${tag} · ${SITE_TITLE}`} description={`Posts tagged ${tag}`}>
+<Page title={`#${tag} · ${SITE_TITLE}`} description={`Příspěvky se štítkem ${tag}`}>
 	<h1>#{tag}</h1>
 	<PostList posts={posts} />
 </Page>

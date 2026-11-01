@@ -6,6 +6,8 @@ writing, editing and publishing happens by asking Claude.
 ## Stack
 - Astro (official blog starter), static output.
 - GitHub Pages, deployed by `.github/workflows/deploy.yml` on every push to `main`.
+- Language: Czech. Write posts, titles, descriptions, tags, alt text and UI
+  text in Czech (`<html lang="cs">`, dates formatted `cs-CZ`).
 - Site: https://paralleluniv3rse.github.io/travel-blog/ (`site` + `base` in `astro.config.mjs`).
   For a custom domain: set `site` to the domain, `base` to `'/'`, add `public/CNAME`.
 - Internal links must go through `withBase()` / `postUrl()` / `tagUrl()` in `src/utils.ts`.
@@ -17,7 +19,7 @@ writing, editing and publishing happens by asking Claude.
   ```yaml
   title: 'Post title'
   date: 2026-11-01
-  description: 'One-sentence summary (used in list, RSS, meta tags).'
+  description: 'One-sentence summary (used in post list and meta tags).'
   cover: '../../assets/posts/<slug>/cover.jpg'   # optional
   coverAlt: 'Describe the cover'                  # required if cover is set
   tags: ['japan', 'food']                         # lowercase, reuse existing tags
@@ -25,7 +27,7 @@ writing, editing and publishing happens by asking Claude.
   updated: 2026-11-05                             # optional
   ```
 - Images: `src/assets/posts/<slug>/`.
-- Pages: homepage = post list, `/about/`, `/tags/`, `/tags/<tag>/`, `/rss.xml`.
+- Pages: homepage = post list, `/about/`, `/tags/`, `/tags/<tag>/`. No RSS feed.
 - Site title/description/author: `src/consts.ts`.
 
 ## Workflows

@@ -10,7 +10,7 @@ interface Props {
 const { posts } = Astro.props;
 ---
 
-{posts.length === 0 && <p>No posts yet.</p>}
+{posts.length === 0 && <p>Zatím žádné příspěvky.</p>}
 <ul class="posts">
 	{
 		posts.map((post) => (
@@ -23,7 +23,7 @@ const { posts } = Astro.props;
 				</a>
 				<p class="meta">
 					<FormattedDate date={post.data.date} />
-					{post.data.draft && <strong> · draft</strong>}
+					{post.data.draft && <strong> · koncept</strong>}
 				</p>
 				<p class="description">{post.data.description}</p>
 			</li>

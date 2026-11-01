@@ -1,11 +1,10 @@
 ---
 import { AUTHOR } from '../consts';
-import { withBase } from '../utils';
 const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} {AUTHOR} · <a href={withBase('/rss.xml')}>RSS</a>
+	&copy; {today.getFullYear()} {AUTHOR}
 </footer>
 <style>
 	footer {

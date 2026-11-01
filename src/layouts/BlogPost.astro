@@ -15,7 +15,7 @@ const { title, description, date, updated, cover, coverAlt, tags } = Astro.props
 			<h1>{title}</h1>
 			<p class="meta">
 				<FormattedDate date={date} />
-				{updated && <span> · updated <FormattedDate date={updated} /></span>}
+				{updated && <span> · upraveno <FormattedDate date={updated} /></span>}
 			</p>
 			<TagList tags={tags} />
 		</header>
