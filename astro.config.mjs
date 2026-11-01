@@ -1,7 +1,6 @@
 // @ts-check
 
 import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
 
 // GitHub Pages project site. When a custom domain is added:
@@ -9,7 +8,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 export default defineConfig({
 	site: 'https://paralleluniv3rse.github.io',
 	base: '/travel-blog',
-	integrations: [mdx(), sitemap()],
+	integrations: [mdx()],
 	image: {
 		// Responsive srcset/sizes for all images, including those in Markdown.
 		layout: 'constrained',

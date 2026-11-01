@@ -52,6 +52,8 @@ writing, editing and publishing happens by asking Claude.
 - Keep design simple, readable, mobile-first.
 - Do not add dependencies or features unless asked.
 - **Ask before deleting any post.**
+- Site must stay unlisted: keep the `noindex, nofollow, noarchive` robots meta
+  in `BaseHead.astro`; no sitemap.
 - Keep the repo well under 1 GB. Check with `du -sh src/assets` when adding
   photos; if it passes ~500 MB, propose moving images to external storage.
 

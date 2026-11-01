@@ -23,10 +23,9 @@ const ogImage = image ? await getImage({ src: image, width: 1200, format: 'jpg' 
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
 <link rel="icon" href={withBase('/favicon.ico')} />
-<link rel="sitemap" href={withBase('/sitemap-index.xml')} />
 <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={new URL(withBase('/rss.xml'), Astro.site)} />
 <meta name="generator" content={Astro.generator} />
-<meta name="robots" content="noarchive" />
+<meta name="robots" content="noindex, nofollow, noarchive" />
 
 <Font cssVariable="--font-atkinson" preload />
 

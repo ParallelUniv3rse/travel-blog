@@ -1,10 +1,8 @@
-# Opt out of web archiving (Internet Archive / Wayback Machine).
-# Only takes effect when served at the domain root, i.e. with a custom domain.
+# Pages carry <meta name="robots" content="noindex, nofollow, noarchive">.
+# Crawlers must be allowed to fetch pages to see that tag, so only the
+# Internet Archive is blocked here. Only effective at a domain root.
 User-agent: ia_archiver
 Disallow: /
 
 User-agent: archive.org_bot
 Disallow: /
-
-User-agent: *
-Allow: /
