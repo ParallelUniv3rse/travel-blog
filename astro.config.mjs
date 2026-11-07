@@ -3,11 +3,10 @@
 import mdx from '@astrojs/mdx';
 import { defineConfig, fontProviders } from 'astro/config';
 
-// GitHub Pages project site. When a custom domain is added:
-// set `site` to the domain, set `base` to '/', and add public/CNAME.
+// GitHub Pages with custom domain (public/CNAME).
 export default defineConfig({
-	site: 'https://paralleluniv3rse.github.io',
-	base: '/travel-blog',
+	site: 'https://blog.arnostneurad.com',
+	base: '/',
 	integrations: [mdx()],
 	image: {
 		// Responsive srcset/sizes for all images, including those in Markdown.
