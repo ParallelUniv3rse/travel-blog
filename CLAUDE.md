@@ -47,7 +47,9 @@ Claude. Keep it minimal: only what is needed for that.
      <Gallery images={[{ src: a, alt: '...', caption: '...' }]} />
      ```
   4. Every image needs meaningful alt text.
-  Astro generates responsive WebP sizes at build time (`image.layout: 'constrained'`).
+  Astro generates responsive WebP sizes at build time (`image.layout: 'constrained'`,
+  WebP quality 70). Markdown images get `width: 720` and a matching `sizes` from the
+  `postImageSizes` plugin in `astro.config.mjs`, so phones load ~1080 px files.
 
 ## Rules
 - Run `npm run build` before every push; never push a broken build.
