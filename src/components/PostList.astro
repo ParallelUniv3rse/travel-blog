@@ -20,11 +20,11 @@ const { posts } = Astro.props;
 						<Image src={post.data.cover} alt={post.data.coverAlt ?? ''} width={720} height={360} />
 					)}
 					<h2 class="title">{post.data.title}</h2>
+					<p class="meta">
+						<FormattedDate date={post.data.date} />
+					</p>
+					<p class="description">{post.data.description}</p>
 				</a>
-				<p class="meta">
-					<FormattedDate date={post.data.date} />
-				</p>
-				<p class="description">{post.data.description}</p>
 			</li>
 		))
 	}
@@ -39,6 +39,7 @@ const { posts } = Astro.props;
 		margin-bottom: 2.5em;
 	}
 	.posts a {
+		display: block;
 		text-decoration: none;
 		color: inherit;
 	}
