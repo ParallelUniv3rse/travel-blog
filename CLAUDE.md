@@ -47,6 +47,11 @@ Claude. Keep it minimal: only what is needed for that.
      <Gallery images={[{ src: a, alt: '...', caption: '...' }]} />
      ```
   4. Every image needs meaningful alt text.
+  5. Video: HEIC needs conversion to JPEG first (sharp can't decode it).
+     Re-encode with ffmpeg to 720 px wide H.264, no audio unless needed, `-crf 33`,
+     `-map_metadata -1 -movflags +faststart`; save to `public/posts/<slug>/name.mp4`
+     plus a poster frame `name.jpg`, then embed in Markdown:
+     `<video controls muted playsinline preload="none" width=… height=… poster="/posts/<slug>/name.jpg" aria-label="…"><source src="/posts/<slug>/name.mp4" type="video/mp4" /></video>`
   Astro generates responsive WebP sizes at build time (`image.layout: 'constrained'`,
   WebP quality 70). Markdown images get `width: 720` and a matching `sizes` from the
   `postImageSizes` plugin in `astro.config.mjs`, so phones load ~1080 px files.
