@@ -35,6 +35,12 @@ Claude. Keep it minimal: only what is needed for that.
   preview, commit, push.
 - **Edit:** locate the post (grep titles/content), change it, build, commit, push.
 - **Photos:**
+  0. **Use every photo the owner sends.** Inline images in the message and
+     attached files (e.g. HEIC in the uploads folder) are DIFFERENT photos,
+     never duplicates: 5 inline + 5 HEIC = 10 photos. Before writing, list
+     every file received with a one-line description and the total count.
+     HEIC: ImageMagick here can't decode them; convert with Python
+     `pillow-heif` in a scratchpad venv, then run the script on the JPEGs.
   1. Process every photo: `node scripts/process-photos.mjs <slug> <files...>`
      (auto-rotate, max 2000 px long side, JPEG ~80%, <500 KB target,
      strips ALL metadata incl. GPS; fails if metadata remains).
