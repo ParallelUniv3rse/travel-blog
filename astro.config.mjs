@@ -7,14 +7,38 @@ import { defineConfig, fontProviders } from 'astro/config';
 // Post photos in Markdown: tell the browser their real display width (the
 // 720 px text column, full width minus margins on phones), so phones pick a
 // smaller file from the srcset instead of one sized for the whole screen.
+//
+// Galleries: images written on consecutive lines (one paragraph, no blank line
+// between them) become a thumbnail grid, `<p class="gallery gallery-N">`.
+// An image in its own paragraph stays a standalone photo. Gallery images get
+// a small `sizes` so phones load thumbnails; the lightbox in BlogPost.astro
+// picks a large file from the same srcset.
+const isImg = (c) => c.type === 'element' && c.tagName === 'img';
+const galleryImages = new Set();
 const postImageSizes = {
 	name: 'post-image-sizes',
 	element: {
-		filter: ['img'],
+		filter: ['p', 'img'],
 		visit(node, ctx) {
+			if (node.tagName === 'p') {
+				const imgs = node.children.filter(isImg);
+				const onlyImgs = node.children.every(
+					(c) => isImg(c) || (c.type === 'text' && !c.value.trim()),
+				);
+				if (imgs.length < 2 || !onlyImgs) return;
+				ctx.setProperty(node, 'className', ['gallery', `gallery-${imgs.length}`]);
+				for (const img of imgs) galleryImages.add(img.properties.src);
+				return;
+			}
 			if (node.properties?.width) return;
 			ctx.setProperty(node, 'width', 720);
-			ctx.setProperty(node, 'sizes', '(min-width: 760px) 720px, calc(100vw - 36px)');
+			ctx.setProperty(
+				node,
+				'sizes',
+				galleryImages.has(node.properties.src)
+					? '(min-width: 760px) 240px, 33vw'
+					: '(min-width: 760px) 720px, calc(100vw - 36px)',
+			);
 		},
 	},
 };

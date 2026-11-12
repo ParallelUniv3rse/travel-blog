@@ -94,12 +94,50 @@ img {
 video {
 	display: block;
 	max-width: 100%;
-	max-height: 80vh;
+	max-height: 70vh;
 	width: auto;
 	height: auto;
 	margin: 0 auto;
 	border-radius: 8px;
 	background: #000;
+}
+/* Standalone post photo: keep tall (portrait) shots from filling the screen. */
+.prose p > img:only-child {
+	display: block;
+	width: auto;
+	max-height: 70vh;
+	margin: 0 auto;
+}
+/* Gallery: consecutive images in one paragraph (see astro.config.mjs). */
+.prose p.gallery {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 4px;
+}
+.prose p.gallery-2,
+.prose p.gallery-4 {
+	grid-template-columns: repeat(2, 1fr);
+}
+.prose p.gallery img {
+	width: 100%;
+	height: 100%;
+	aspect-ratio: 1;
+	object-fit: cover;
+	border-radius: 4px;
+}
+/* 3-column galleries that would leave a gap in the last row: widen the first
+   photo (put a landscape one first). 5, 8, … photos: spans 2 columns;
+   7, 10, … photos: spans the full row. */
+.prose p.gallery:not(.gallery-2, .gallery-4) img:first-child:nth-last-child(3n + 2) {
+	grid-column: span 2;
+	aspect-ratio: 2;
+}
+.prose p.gallery:not(.gallery-2, .gallery-4) img:first-child:nth-last-child(3n + 1) {
+	grid-column: 1 / -1;
+	aspect-ratio: 2;
+}
+.prose img {
+	cursor: zoom-in;
 }
 code {
 	padding: 2px 5px;

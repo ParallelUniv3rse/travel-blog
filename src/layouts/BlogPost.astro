@@ -21,7 +21,57 @@ const { title, description, date, cover, coverAlt } = Astro.props;
 			<slot />
 		</div>
 	</article>
+	<dialog class="lightbox" aria-label="Prohlížeč fotek">
+		<img alt="" />
+		<button class="lb-close" type="button" aria-label="Zavřít">×</button>
+		<button class="lb-prev" type="button" aria-label="Předchozí fotka">‹</button>
+		<button class="lb-next" type="button" aria-label="Další fotka">›</button>
+		<span class="lb-count"></span>
+	</dialog>
 </Page>
+<script>
+	// Tap a post photo to view it large; arrows/swipe move through all photos in the post.
+	const dialog = document.querySelector<HTMLDialogElement>('.lightbox')!;
+	const big = dialog.querySelector('img')!;
+	const count = dialog.querySelector<HTMLElement>('.lb-count')!;
+	const photos = [...document.querySelectorAll<HTMLImageElement>('.prose img')];
+	let current = 0;
+
+	function show(i: number) {
+		current = (i + photos.length) % photos.length;
+		const p = photos[current];
+		big.removeAttribute('src');
+		big.srcset = p.srcset;
+		big.sizes = '100vw';
+		big.src = p.currentSrc || p.src;
+		big.alt = p.alt;
+		count.textContent = `${current + 1} / ${photos.length}`;
+	}
+	photos.forEach((p, i) =>
+		p.addEventListener('click', () => {
+			show(i);
+			dialog.showModal();
+		}),
+	);
+	dialog.querySelector('.lb-prev')!.addEventListener('click', () => show(current - 1));
+	dialog.querySelector('.lb-next')!.addEventListener('click', () => show(current + 1));
+	dialog.querySelector('.lb-close')!.addEventListener('click', () => dialog.close());
+	// Tap on the dark background (not a button) closes.
+	dialog.addEventListener('click', (e) => {
+		if (e.target === dialog || e.target === big) dialog.close();
+	});
+	dialog.addEventListener('keydown', (e) => {
+		if (e.key === 'ArrowLeft') show(current - 1);
+		if (e.key === 'ArrowRight') show(current + 1);
+	});
+	let startX = 0;
+	dialog.addEventListener('touchstart', (e) => (startX = e.touches[0].clientX), { passive: true });
+	dialog.addEventListener('touchend', (e) => {
+		const dx = e.changedTouches[0].clientX - startX;
+		if (Math.abs(dx) > 50) show(dx < 0 ? current + 1 : current - 1);
+	});
+	if (photos.length < 2) dialog.classList.add('single');
+</script>
 <style>
 	.post-header {
 		margin-bottom: 1.5em;
@@ -38,5 +88,70 @@ const { title, description, date, cover, coverAlt } = Astro.props;
 		height: auto;
 		border-radius: 8px;
 		margin-bottom: 1.5em;
+	}
+	.lightbox {
+		width: 100vw;
+		height: 100dvh;
+		max-width: none;
+		max-height: none;
+		margin: 0;
+		padding: 0;
+		border: none;
+		background: rgba(0, 0, 0, 0.92);
+		color: #fff;
+	}
+	.lightbox[open] {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.lightbox::backdrop {
+		background: transparent;
+	}
+	.lightbox img {
+		max-width: 100%;
+		max-height: 100%;
+		width: auto;
+		height: auto;
+		object-fit: contain;
+		border-radius: 0;
+	}
+	.lightbox button {
+		position: absolute;
+		border: none;
+		background: rgba(0, 0, 0, 0.4);
+		color: #fff;
+		font-size: 2.2rem;
+		line-height: 1;
+		width: 2.6rem;
+		height: 2.6rem;
+		border-radius: 50%;
+		cursor: pointer;
+	}
+	.lb-close {
+		top: 0.6rem;
+		right: 0.6rem;
+	}
+	.lb-prev,
+	.lb-next {
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	.lb-prev {
+		left: 0.6rem;
+	}
+	.lb-next {
+		right: 0.6rem;
+	}
+	.lb-count {
+		position: absolute;
+		bottom: 0.8rem;
+		left: 50%;
+		transform: translateX(-50%);
+		font-size: 0.85rem;
+		opacity: 0.8;
+	}
+	.lightbox.single :is(.lb-prev, .lb-next, .lb-count) {
+		display: none;
 	}
 </style>

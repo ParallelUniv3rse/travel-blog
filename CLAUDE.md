@@ -15,7 +15,7 @@ Claude. Keep it minimal: only what is needed for that.
 - Internal links must go through `withBase()` / `postUrl()` in `src/utils.ts`.
 
 ## Content
-- Posts: `src/content/blog/YYYY-MM-DD-slug.md` (`.mdx` only when a gallery is needed).
+- Posts: `src/content/blog/YYYY-MM-DD-slug.md` (always `.md`; galleries work in plain Markdown).
   URL is `/blog/<slug>/` (date prefix stripped).
 - Frontmatter (validated in `src/content.config.ts`):
   ```yaml
@@ -50,13 +50,16 @@ Claude. Keep it minimal: only what is needed for that.
      (auto-rotate, max 2000 px long side, JPEG ~80%, <500 KB target,
      strips ALL metadata incl. GPS; fails if metadata remains).
      Never commit unprocessed originals.
-  2. Inline image in Markdown: `![alt text](../../assets/posts/<slug>/name.jpg)`
-  3. Gallery: use `.mdx` and the `Gallery` component:
-     ```mdx
-     import Gallery from '../../components/Gallery.astro';
-     import a from '../../assets/posts/<slug>/a.jpg';
-     <Gallery images={[{ src: a, alt: '...', caption: '...' }]} />
-     ```
+  2. Standalone image (own paragraph, blank lines around it):
+     `![alt text](../../assets/posts/<slug>/name.jpg)`. Tall shots are capped
+     at 70vh. Use for key photos that a paragraph is about.
+  3. Gallery: put image lines directly one under another (no blank line
+     between them, plain `.md`). That paragraph becomes a thumbnail grid
+     (3 columns; 2 for 2 or 4 photos). With 5/8 photos the first spans
+     2 columns, with 7/10 the full row, so put a landscape photo first.
+     Use galleries for runs of supporting photos so text isn't buried;
+     keep runs of more than ~2 standalone images out. Every post photo opens
+     large in a lightbox on tap (`BlogPost.astro`). Videos stay standalone.
   4. Every image needs meaningful alt text.
   5. Video: HEIC needs conversion to JPEG first (sharp can't decode it).
      Re-encode with ffmpeg to 720 px wide H.264, no audio unless needed, `-crf 33`,
@@ -65,7 +68,8 @@ Claude. Keep it minimal: only what is needed for that.
      `<video controls muted playsinline preload="none" width=… height=… poster="/posts/<slug>/name.jpg" aria-label="…"><source src="/posts/<slug>/name.mp4" type="video/mp4" /></video>`
   Astro generates responsive WebP sizes at build time (`image.layout: 'constrained'`,
   WebP quality 70). Markdown images get `width: 720` and a matching `sizes` from the
-  `postImageSizes` plugin in `astro.config.mjs`, so phones load ~1080 px files.
+  `postImageSizes` plugin in `astro.config.mjs`, so phones load ~1080 px files
+  (gallery thumbnails get a ~240 px `sizes`).
 
 ## Rules
 - Run `npm run build` before every push; never push a broken build.
