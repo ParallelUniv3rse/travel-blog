@@ -35,10 +35,15 @@ Claude. Keep it minimal: only what is needed for that.
   preview, commit, push.
 - **Edit:** locate the post (grep titles/content), change it, build, commit, push.
 - **Photos:**
-  0. **Use every photo the owner sends.** Inline images in the message and
-     attached files (e.g. HEIC in the uploads folder) are DIFFERENT photos,
+  0. **Consider every photo the owner sends.** Inline images in the message and
+     attached files (e.g. HEIC in the uploads folder) are DIFFERENT files,
      never duplicates: 5 inline + 5 HEIC = 10 photos. Before writing, list
      every file received with a one-line description and the total count.
+     Use all of them except near-identical shots: of those, keep the best
+     one and say which were left out. Straighten tilted horizons/verticals
+     and lightly reframe (crop empty sky, stray edges) so photos look nice;
+     crop the converted JPEG before running the script.
+     Files of ~135 bytes are iCloud placeholders, not photos: report them.
      HEIC: ImageMagick here can't decode them; convert with Python
      `pillow-heif` in a scratchpad venv, then run the script on the JPEGs.
   1. Process every photo: `node scripts/process-photos.mjs <slug> <files...>`
